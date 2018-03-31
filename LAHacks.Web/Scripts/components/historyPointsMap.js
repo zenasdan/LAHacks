@@ -28,6 +28,24 @@
                 });
                 google.maps.event.trigger(vm.map, 'resize');
             }
+
+            function _venues() {
+                vm.latitude = 30;
+                vm.longitude = - 119;
+                vm.mapOptions.cneter = new google.maps.LatLng(vm.latitude, vm.longitude);
+
+                vm.map = new google.maps.Map(document.getElementById('gmap'), vm.mapOptions);
+                var marker = new google.maps.Marker({
+                    map: vm.map,
+                    position: new google.maps.LatLng(vm.latitude, vm.longitude),
+                    title: "PointsMap"
+                });
+                google.maps.event.trigger(vm.map, 'resize');
+               
+            
+
+            }
+
         }
     });
 })();
