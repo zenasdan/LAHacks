@@ -5,6 +5,8 @@
 *.csproj merge=binary
 dest/
 
+.vscode/
+
 # User-specific files
 *.suo
 *.user
