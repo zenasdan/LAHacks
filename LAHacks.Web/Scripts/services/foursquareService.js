@@ -17,9 +17,9 @@
 
             $http({
                 method: "GET",
-                url: base_url + $scope.obj.searchString +
+                url: base_url + "UCLA" +
                     "&venuePhotos=1&categoryId=" +
-                    category.join('&') +
+                    categories.join('&') +
                     "&client_id=" + client_id +
                     "&client_secret=" + client_secret +
                     " &v=" + (new Date()).toISOString().slice(0, 10).replace(/-/g, "")

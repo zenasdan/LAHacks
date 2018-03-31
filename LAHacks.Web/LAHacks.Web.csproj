@@ -257,6 +257,7 @@
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
     <Content Include="package.json" />
+    <Content Include="Scripts\services\foursquareService.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
