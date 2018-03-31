@@ -16,8 +16,8 @@
             }
 
             function _search() {
-                vm.latitude = 118.4468;
-                vm.longitude = 34.0705;
+                vm.latitude = 34.0705;
+                vm.longitude = -118.4468;
                 vm.mapOptions.center = new google.maps.LatLng(vm.latitude, vm.longitude);
 
                 vm.map = new google.maps.Map(document.getElementById('gmap'), vm.mapOptions);
