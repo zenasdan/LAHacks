@@ -15,7 +15,7 @@
             categories.push("4bf58dd8d48988d191941735"); // "Science Museum"
             categories.push("5642206c498e4bfca532186c"); // "Memorial Site"
 
-            $http({
+            return $http({
                 method: "GET",
                 url: base_url + "UCLA" +
                     "&venuePhotos=1&categoryId=" +
@@ -24,7 +24,8 @@
                     "&client_secret=" + client_secret +
                     " &v=" + (new Date()).toISOString().slice(0, 10).replace(/-/g, "")
             }).then((resp, status) => {
-                console.log("resp", resp);
+                var venues = resp.data.response.groups[0].items;
+                console.log(venues);
             }, (data, status) => {
                 console.log("No Result Found");
             }).catch(err => {
