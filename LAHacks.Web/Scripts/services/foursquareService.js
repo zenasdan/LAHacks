@@ -16,7 +16,7 @@
             categories.push("4bf58dd8d48988d191941735"); // "Science Museum"
             categories.push("5642206c498e4bfca532186c"); // "Memorial Site"
 
-            $http({
+            return $http({
                 method: "GET",
                 url: base_url + "UCLA" +
                     "&venuePhotos=1&categoryId=" +
