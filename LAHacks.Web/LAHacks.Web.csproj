@@ -461,6 +461,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\services\foursquareService.js" />
     <Content Include="Scripts\services\geocodeService.js" />
     <Content Include="Scripts\Tour\js\.DS_Store" />
     <Content Include="Scripts\Tour\js\bootstrap.min.js" />
