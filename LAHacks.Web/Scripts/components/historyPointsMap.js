@@ -3,7 +3,7 @@
     angular.module(appName).component("historyPointsMap", {
         bindings: {},
         templateUrl: "/Scripts/components/views/historyPointsMap.html",
-        controller: function (geocodeService, $scope) {
+        controller: function (geocodeService, $scope, foursquareService) {
             var vm = this;
             vm.$onInit = _init;
             vm.mapOptions = {
@@ -17,7 +17,7 @@
 
             function _search() {
                 vm.latitude = 34.0705;
-                vm.longitude = -118.4468; 
+                vm.longitude = -118.4468;
                 vm.mapOptions.center = new google.maps.LatLng(vm.latitude, vm.longitude);
 
                 vm.map = new google.maps.Map(document.getElementById('gmap'), vm.mapOptions);
@@ -27,6 +27,8 @@
                     title: "historyPointsMap"
                 });
                 google.maps.event.trigger(vm.map, 'resize');
+
+                foursquareService.getVenuesByHistoricCategory();
             }
         }
     });
