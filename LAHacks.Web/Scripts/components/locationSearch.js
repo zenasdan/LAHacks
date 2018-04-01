@@ -13,9 +13,9 @@
             }
 
             function _search(searchText) {
-                var queryString = _concatify(searchText);
-                var temp = {"temp": queryString};
-                requestService.ApiRequestService("POST", "/api/places", temp)
+                var result = _concatify(searchText);
+                var model = {"queryString": result};
+                requestService.ApiRequestService("POST", "/api/places", model)
                     .then(function (response) {
                         console.log("SUCCESS SEARCH ", response);
                     })
