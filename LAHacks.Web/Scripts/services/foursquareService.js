@@ -5,6 +5,7 @@
     FoursquareService.$inject = ["$http"];
 
     function FoursquareService($http) {
+       
         this.getVenuesByHistoricCategory = () => {
             const client_id = "AYKRCHFZCCWTDDT2JKTDB0FR5YZQPCSXNMPNCO3LNCP5KDLI";
             const client_secret = "ZPV0A1ZTPEAZP4OBFQCOS0WGM1ZCHZ0BZGU2X4UE1MBV3TSF";
@@ -15,22 +16,31 @@
             categories.push("4bf58dd8d48988d191941735"); // "Science Museum"
             categories.push("5642206c498e4bfca532186c"); // "Memorial Site"
 
-            $http({
+            return $http({
                 method: "GET",
                 url: base_url + "UCLA" +
                     "&venuePhotos=1&categoryId=" +
                     categories.join('&') +
                     "&client_id=" + client_id +
                     "&client_secret=" + client_secret +
-                    " &v=" + (new Date()).toISOString().slice(0, 10).replace(/-/g, "")
+                    "&v=" + (new Date()).toISOString().slice(0, 10).replace(/-/g, "")
             }).then((resp, status) => {
-                var venues = resp.data.response.groups[0].items;
-                console.log(venues);
-                return venues;
+                localStorage.setItem("venues", JSON.stringify(resp.data.response.groups[0].items));
+
             }, (data, status) => {
-                console.log("No Result Found");
+                swal({
+                    title: "No Results Found",
+                    text: "Please try with another location",
+                    icon: "error"
+                }); 
+               
             }).catch(err => {
-                console.log("err", err);
+                swal({
+                    title: "Something went wrong",
+                    text: err.message,
+                    icon: "error"
+                });
+                
             });
         }
     }
