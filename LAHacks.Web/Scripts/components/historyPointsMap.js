@@ -29,14 +29,6 @@
                 };
 
                 vm.map = new google.maps.Map(document.getElementById('gmap'), vm.mapOptions);
-                var centerIcon = {
-                    url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png", 
-                    scaledSize: new google.maps.Size(40, 40), 
-                };
-                var venueIcon = {
-                    url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-                    scaledSize: new google.maps.Size(40, 40),
-                };
                 var marker = new google.maps.Marker({
                     map: vm.map,
                     position: new google.maps.LatLng(vm.latitude, vm.longitude),
@@ -52,18 +44,18 @@
                     //console.log(obj.venue.photos.groups[0].items[0].prefix);
                     //console.log(obj.venue.photos.groups[0].items[0].suffix);
 
-                   
+
                     let contentString = `<div id='content'>
                         <h4 class="text-center">${obj.venue.name}</h4>
                         <div><img src=${obj.venue.photos.groups[0].items[0].prefix}100x100${obj.venue.photos.groups[0].items[0].suffix} />`;
 
-                    if(obj.tips) {
+                    if (obj.tips) {
                         contentString += `<div>${obj.tips[0].text}</div>`;
                     }
 
                     contentString += `</div><a href="https://en.wikipedia.org/wiki/${encodeURIComponent(obj.venue.name)}" target="_blank"> 
                         https://en.wikipedia.org/wiki/${obj.venue.name}</a></div > `;
-                                       
+
                     let infowindow = new google.maps.InfoWindow({
                         content: contentString
                     });
@@ -71,7 +63,14 @@
                     let marker = new google.maps.Marker({
                         map: vm.map,
                         position: new google.maps.LatLng(obj.venue.location.lat, obj.venue.location.lng),
-                        //icon: `${obj.venue.categories[0].icon.prefix}32${obj.venue.categories[0].icon.suffix}`,
+                        //icon: `${obj.venue.categories[0].icon.prefix}32${obj.venue.categories[0].icon.suffix}|ddd`,
+                        //icon: {
+                        //    url: `${obj.venue.categories[0].icon.prefix}32${obj.venue.categories[0].icon.suffix}`,
+                        //    strokeColor: 'blue',
+                        //    scale: 3,
+                        //    fillColor: '#0ff',
+                        //    fillOpacity: 1,
+                        //},
                         icon: venueIcon,
                         title: obj.venue.name
                     });
