@@ -25,8 +25,8 @@
                     "&client_secret=" + client_secret +
                     "&v=" + (new Date()).toISOString().slice(0, 10).replace(/-/g, "")
             }).then((resp, status) => {
+                console.log(resp.data.response.groups[0].items);
                 localStorage.setItem("venues", JSON.stringify(resp.data.response.groups[0].items));
-
             }, (data, status) => {
                 swal({
                     title: "No Results Found",
@@ -44,18 +44,17 @@
             });
         }
 
-        this.twilioMessage = (number) => {
+        this.twilioMessage = (number, textMessage) => {
             const base_url = "http://localhost:3024/TwilioMessage/SendSms";
             return $http({
                 method: "POST",
                 url: base_url,
                 data: {
                 phoneNumber: number,
-                textMessage: "Hello from LA"
+                textMessage: "List of Amazing Historic places around us" +"\n"+textMessage
                 }
             }).then((resp, status) => {
                 swal("Message Sent!");
-
             }, (data, status) => {
                 swal({
                     title: "No Results Found",

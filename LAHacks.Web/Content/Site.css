@@ -22,3 +22,16 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.searchBar {
+    position: absolute;
+    top: 0px;
+    z-index: 10000;
+}
+
+
+
+.fullHeight {
+    -webkit-overflow-scrolling: touch;
+    height: 100%;
+}
