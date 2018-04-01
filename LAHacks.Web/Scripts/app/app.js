@@ -2,6 +2,6 @@
 
 (function (AppName) {
 
-    var app = angular.module(AppName, ["ui.bootstrap", "ngAnimate"]);
+    var app = angular.module(AppName, ["ui.bootstrap", "ngAnimate", "firebase"]);
 
 })(appName);
