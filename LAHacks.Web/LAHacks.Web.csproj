@@ -241,6 +241,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Api\MessageController.cs" />
+    <Compile Include="Controllers\Api\PlacesController.cs" />
     <Compile Include="Controllers\Api\Tests\TestAuthController.cs" />
     <Compile Include="Controllers\Api\TwilioMessageController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -488,6 +489,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\services\foursquareService.js" />
     <Content Include="Scripts\services\geocodeService.js" />
+    <Content Include="Scripts\services\requestService.js" />
     <Content Include="Scripts\Tour\js\.DS_Store" />
     <Content Include="Scripts\Tour\js\bootstrap.min.js" />
     <Content Include="Scripts\Tour\js\bootstrap-datepicker.js" />

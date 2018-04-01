@@ -1,5 +1,5 @@
 ﻿<form class="form-inline colorlib-form" method="post">
     <div class="col-xs-12 col-sm-5 col-md-5 col-lg-4">
-        <input type="text" ng-model="data.text" id="location-search" placeholder="Search Location" /><input name="submit" id="search-button" ng-click="$ctrl.search()" class="btn-primary" type="button" value="Go">
+        <input type="text" ng-model="$ctrl.searchVal" id="location-search" placeholder="Search Location" /><input name="submit" id="search-button" ng-click="$ctrl.search($ctrl.searchVal)" class="btn-primary" type="button" value="Go">
     </div>
 </form>
