@@ -54,14 +54,14 @@
 
                    
                     let contentString = `<div id='content'>
-                        <h4 class="text-center">${obj.venue.name}</h4>`;
-                        //<div><img src=${obj.venue.photos.groups[0].items[0].prefix}100x100${obj.venue.photos.groups[0].items[0].suffix} />`;
+                        <h4 class="text-center">${obj.venue.name}</h4>
+                        <div><img src=${obj.venue.photos.groups[0].items[0].prefix}100x100${obj.venue.photos.groups[0].items[0].suffix} />`;
 
                     if(obj.tips) {
                         contentString += `<div>${obj.tips[0].text}</div>`;
                     }
 
-                    contentString += `<a href="https://en.wikipedia.org/wiki/${encodeURIComponent(obj.venue.name)}" target="_blank"> 
+                    contentString += `</div><a href="https://en.wikipedia.org/wiki/${encodeURIComponent(obj.venue.name)}" target="_blank"> 
                         https://en.wikipedia.org/wiki/${obj.venue.name}</a></div > `;
                                        
                     let infowindow = new google.maps.InfoWindow({
