@@ -48,21 +48,21 @@
                 const venues = JSON.parse(localStorage.getItem("venues"));
 
                 for (const obj of venues) {
-                    console.log(obj);
-                    console.log(obj.venue.photos.groups[0].items[0].prefix);
-                    console.log(obj.venue.photos.groups[0].items[0].suffix);
+                    //console.log(obj);
+                    //console.log(obj.venue.photos.groups[0].items[0].prefix);
+                    //console.log(obj.venue.photos.groups[0].items[0].suffix);
 
                    
                     let contentString = `<div id='content'>
-                        <h3 class="text-center">${obj.venue.name}</h3>
-                        <div><img src=${obj.venue.photos.groups[0].items[0].prefix}100x100${obj.venue.photos.groups[0].items[0].suffix} />`;
+                        <h4 class="text-center">${obj.venue.name}</h4>`;
+                        //<div><img src=${obj.venue.photos.groups[0].items[0].prefix}100x100${obj.venue.photos.groups[0].items[0].suffix} />`;
 
                     if(obj.tips) {
                         contentString += `<div>${obj.tips[0].text}</div>`;
                     }
 
-                    contentString += `</div><a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194"> 
-                        https://en.wikipedia.org/w/index.php?title=Uluru</a></div > `;
+                    contentString += `<a href="https://en.wikipedia.org/wiki/${encodeURIComponent(obj.venue.name)}" target="_blank"> 
+                        https://en.wikipedia.org/wiki/${obj.venue.name}</a></div > `;
                                        
                     let infowindow = new google.maps.InfoWindow({
                         content: contentString
