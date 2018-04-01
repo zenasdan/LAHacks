@@ -53,15 +53,16 @@
                 var user = firebase.auth().currentUser;
                 if (user) {
                     _signOut();
-                    _emailAndPassAuth(model, form, user);
+                    _emailAndPassAuth(model, form);
                 } else {
-                    _emailAndPassAuth(model, form, user);
+                    _emailAndPassAuth(model, form);
                 }
             }
 
-            function _emailAndPassAuth(model, form, user) {
+            function _emailAndPassAuth(model, form) {
                 firebase.auth().signInWithEmailAndPassword(model.email, model.password)
                     .then(function (success) {
+                        var user = firebase.auth().currentUser;
                         _setCookie(user);
                         _clearFields(form);
                     })
@@ -83,7 +84,8 @@
                 var d = new Date();
                 d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
                 var expires = "expires=" + d.toUTCString();
-                document.cookie = "email=" + user.email + ";uid=" + user.uid + ";" + expires + ";path=/";
+                document.cookie = "email=" + user.email + ";" + expires + ";path=/";
+                document.cookie = "uid=" + user.uid + ";" + expires + ";path=/";
             }
 
             function _clearFields(form) {
@@ -93,9 +95,15 @@
                 window.location = "\/";
             }
 
+            function _deleteCookie(name) {
+                document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            };
+
             function _signOut() {
                 firebase.auth().signOut().then(function () {
-                    document.cookie = "";
+                    _deleteCookie("email");
+                    _deleteCookie("uid");
+                    window.location = "\/";
                 }).catch(function (error) {
                 });
             }
