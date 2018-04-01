@@ -26,7 +26,6 @@
                     "&v=" + (new Date()).toISOString().slice(0, 10).replace(/-/g, "")
             }).then((resp, status) => {
                 localStorage.setItem("venues", JSON.stringify(resp.data.response.groups[0].items));
-
             }, (data, status) => {
                 swal({
                     title: "No Results Found",
