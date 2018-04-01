@@ -267,6 +267,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\Custom\header-section.css" />
+    <Content Include="Content\Custom\signInModal.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Tour\about.html" />
     <Content Include="Content\Tour\blog.html" />
@@ -463,7 +464,11 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\components\historyPointsMap.js" />
+    <Content Include="Scripts\components\locationSearch.js" />
+    <Content Include="Scripts\components\registrationOrSignInModalComponent.js" />
     <Content Include="Scripts\components\views\historyPointsMap.html" />
+    <Content Include="Scripts\components\views\locationSearch.html" />
+    <Content Include="Scripts\components\views\registrationOrSignInModal.html" />
     <Content Include="Scripts\directives\mapGenerator.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -501,9 +506,8 @@
     <Content Include="Scripts\Tour\js\respond.min.js" />
     <Content Include="Scripts\Tour\js\scroll.js" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Registration.cshtml" />
     <Content Include="Views\LAHacks\alpha.cshtml" />
     <Content Include="Views\LAHacks\Delta.cshtml" />
     <Content Include="Views\LAHacks\Epsilon.cshtml" />
@@ -532,8 +536,8 @@
     <Folder Include="Views\Message\" />
     <Folder Include="Views\SmsMessage\" />
     <Folder Include="Views\TestMessage\" />
-    <Folder Include="Views\TwilioMessage\" />
     <Folder Include="Views\Twilio\" />
+    <Folder Include="Views\TwilioMessage\" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\AWSSDK.S3.3.3.7\analyzers\dotnet\cs\AWSSDK.S3.CodeAnalysis.dll" />
