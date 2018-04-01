@@ -43,5 +43,34 @@
                 
             });
         }
+
+        this.twilioMessage = (number) => {
+            const base_url = "http://localhost:3024/TwilioMessage/SendSms";
+            return $http({
+                method: "POST",
+                url: base_url,
+                data: {
+                phoneNumber: number,
+                textMessage: "Hello from LA"
+                }
+            }).then((resp, status) => {
+                swal("Message Sent!");
+
+            }, (data, status) => {
+                swal({
+                    title: "No Results Found",
+                    text: "Please Check the Number",
+                    icon: "error"
+                });
+
+            }).catch(err => {
+                swal({
+                    title: "Something went wrong",
+                    text: err.message,
+                    icon: "error"
+                });
+
+            });
+        }
     }
 })();
