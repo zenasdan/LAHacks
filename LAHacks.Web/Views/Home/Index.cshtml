@@ -10,7 +10,7 @@
 }
 
 <div class="colorlib-loader"></div>
-<div id="page">
+<div ng-controller="nav as nv" id="page">
     <nav class="colorlib-nav" role="navigation">
         <div class="top-menu">
             <div class="container-fluid">
@@ -18,20 +18,21 @@
                     <div class="col-xs-3">
                         <div id="colorlib-logo"><a href="#">History Geek</a></div>
                     </div>
-                    <location-search></location-search>
+                    <location-search lat="nv.lat" long="nv.long"></location-search>
                     @*<input type="search" ng-model="obj.searchString"
                         ng-change="search()" placeholder="Search" class="search-input searchBar">*@
+                    <pre>{{nv.lat | json}}</pre>
+                    <pre>{{nv.long | json}}</pre>
 
-
-
-                    <div ng-controller="nav as nv" class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-right menu-1">
+                    <div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-right menu-1">
                         <ul>
                             <li><a href="#features">Features</a></li>
+                            <li ng-show="nv.loggedIn"><a title="Under Progress" href="#">History</a></li>
                             <li><a href="#" ng-click="nv.share()">Share</a></li>
                             <li><a href="#nearby">Nearby</a></li>
                             <li ng-model="nv.signInLink" ng-hide="nv.loggedIn"><a href="#" ng-click="nv.signIn()">Sign In</a></li>
                             <li ng-model="nv.signOutLink" ng-show="nv.loggedIn"><a href="#" ng-click="nv.signOut()">Sign Out</a></li>
-                            
+                            @*<li style="font-weight: bold;"><a href="#">{{nv.userEmail}}</a></li>*@
 
                         </ul>
                     </div>
@@ -41,7 +42,7 @@
     </nav>
     <div id="header-container">
         <div class="header-section">
-            <history-points-map></history-points-map>
+            <history-points-map lat="nv.lat" long="nv.long"></history-points-map>
         </div>
     </div>
 </div>
@@ -236,6 +237,7 @@
     <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase-database.js"></script>
 
     <script src="https://www.gstatic.com/firebasejs/ui/2.7.0/firebase-ui-auth__en.js"></script>
+    <script src="~/Scripts/services/foursquareService.js"></script>
 
     <script>
         // Initialize Firebase
@@ -249,52 +251,24 @@
         };
         firebase.initializeApp(config);
     </script>
-    <script type="text/javascript">
-        // FirebaseUI config.
-        //var uiConfig = {
-        //    signInSuccessUrl: '\/',
-        //    signInOptions: [
-        //        // Leave the lines as is for the providers you want to offer your users.
-        //        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        //        firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-        //        firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-        //        firebase.auth.GithubAuthProvider.PROVIDER_ID,
-        //        firebase.auth.EmailAuthProvider.PROVIDER_ID
-        //    ]
-        //    // Terms of service url.
-        //    //tosUrl: '<your-tos-url>'
-        //};
-
-        //// Initialize the FirebaseUI Widget using Firebase.
-        //var ui = new firebaseui.auth.AuthUI(firebase.auth());
-        //// The start method will wait until the DOM is loaded.
-        //ui.start('#firebaseui-auth-container', uiConfig);
-    </script>
-    @*<script>
-            firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.log(errorCode + ": " + errorMessage);
-            });
-        </script>*@
     <script>
         (function () {
             'use strict';
 
             angular.module(appName).controller('nav', Nav);
-            Nav.$inject = ["$scope", "$uibModal"];
-            function Nav($scope, $uibModal) {
+            Nav.$inject = ["$scope", "$uibModal", "foursquareService"];
+            function Nav($scope, $uibModal, foursquareService) {
                 var vm = this;
                 vm.$onInit = _init;
                 vm.signIn = _signIn;
                 vm.signOut = _signOut;
                 vm.share = _share;
+                var email = _getCookie("email");
 
                 function _init() {
-                    var email = _getCookie("email");
                     if (email) {
                         vm.loggedIn = true;
+                        vm.userEmail = email;
                     } else {
                         vm.loggedIn = false;
                     }
@@ -343,7 +317,7 @@
                 }
 
                 function _share() {
-                    foursquareService.getVenuesByHistoricCategory();
+                    //foursquareService.getVenuesByHistoricCategory();
                     const venues = JSON.parse(localStorage.getItem("venues"));
                     var venueName = [];
                     console.log(venues);
@@ -372,7 +346,9 @@
                             closeModal: false,
                         },
                     }).then(name => {
-                        foursquareService.twilioMessage(name, textMessage);
+                        if (name) {
+                            foursquareService.twilioMessage(name, textMessage);
+                        }
                     })
                 }
             }
@@ -381,7 +357,6 @@
     <script src="~/Scripts/services/requestService.js"></script>
     <script src="~/Scripts/services/geocodeService.js"></script>
     <script src="~/Scripts/components/historyPointsMap.js"></script>
-    <script src="~/Scripts/services/foursquareService.js"></script>
     <script src="~/Scripts/components/locationSearch.js"></script>
     <script src="~/Scripts/components/registrationOrSignInModalComponent.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

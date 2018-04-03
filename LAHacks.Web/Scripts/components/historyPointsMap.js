@@ -1,24 +1,82 @@
 ﻿(function () {
     'use strict';
     angular.module(appName).component("historyPointsMap", {
-        bindings: {},
+        bindings: {
+            lat: "<",
+            long: "<"
+        },
         templateUrl: "/Scripts/components/views/historyPointsMap.html",
         controller: function (geocodeService, $scope, foursquareService, $compile) {
             var vm = this;
             vm.$onInit = _init;
             vm.mapOptions = {
                 center: null,
-                zoom: 12
+                zoom: 13
             };
-
-            function _init() {
-                _search();
+            vm.$onChanges = function (changes) {
+                console.log("CHANGES", changes);
+                var lat = changes.lat;
+                var long = changes.long;
+                if (!(lat.currentValue) && !(long.currentValue)) {
+                    _init();
+                    lat.currentValue = vm.lat;
+                    long.currentValue = vm.long;
+                    console.log("LAT CURRENT VAL: ", lat.currentValue);
+                }
+                if ((lat.previousValue != lat.currentValue) || (long.previousValue != long.currentValue)) {
+                    console.log("LAT OBJ: " + JSON.stringify(lat) + "; LONG OBJ: " + JSON.stringify(long));
+                    _search(lat.currentValue, long.currentValue);
+                    //_googleMapResizeBugFix(lat.currentValue, long.currentValue);
+                }
             }
 
-            function _search() {
-                vm.latitude = 34.0705;
-                vm.longitude = -118.4468;
-                vm.mapOptions.center = new google.maps.LatLng(vm.latitude, vm.longitude);
+            //var map, infoWindow;
+            //function initMap() {
+            //    map = new google.maps.Map(document.getElementById('map'), {
+            //        center: { lat: -34.397, lng: 150.644 },
+            //        zoom: 6
+            //    });
+            //    infoWindow = new google.maps.InfoWindow;
+
+            //    // Try HTML5 geolocation.
+            //    if (navigator.geolocation) {
+            //        navigator.geolocation.getCurrentPosition(function (position) {
+            //            var pos = {
+            //                lat: position.coords.latitude,
+            //                lng: position.coords.longitude
+            //            };
+
+            //            infoWindow.setPosition(pos);
+            //            infoWindow.setContent('Location found.');
+            //            infoWindow.open(map);
+            //            map.setCenter(pos);
+            //        }, function () {
+            //            handleLocationError(true, infoWindow, map.getCenter());
+            //        });
+            //    } else {
+            //        // Browser doesn't support Geolocation
+            //        handleLocationError(false, infoWindow, map.getCenter());
+            //    }
+            //}
+
+            //function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            //    infoWindow.setPosition(pos);
+            //    infoWindow.setContent(browserHasGeolocation ?
+            //        'Error: The Geolocation service failed.' :
+            //        'Error: Your browser doesn\'t support geolocation.');
+            //    infoWindow.open(map);
+            //}
+
+            function _init() {
+                console.log("LAT AND LONG IN INIT: " + JSON.stringify(vm.lat) + ", " + JSON.stringify(vm.long));
+                vm.lat = 34.0705;
+                vm.long = -118.4468;
+                _search(vm.lat, vm.long);
+            }
+
+            function _search(lat, long) {
+                console.log("LAT AND LONG IN SEARCH FUNC: " + JSON.stringify(lat) + ", " + JSON.stringify(long));
+                vm.mapOptions.center = new google.maps.LatLng(lat, long);
                 var myCurrentPlaceIcon = {
                     url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
                     scaledSize: new google.maps.Size(40, 40),
@@ -27,11 +85,10 @@
                     url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
                     scaledSize: new google.maps.Size(40, 40),
                 };
-
                 vm.map = new google.maps.Map(document.getElementById('gmap'), vm.mapOptions);
                 var marker = new google.maps.Marker({
                     map: vm.map,
-                    position: new google.maps.LatLng(vm.latitude, vm.longitude),
+                    position: new google.maps.LatLng(lat, long),
                     icon: myCurrentPlaceIcon,
                     title: "I'm Here"
                 });
@@ -76,9 +133,17 @@
                     });
                 }
                 google.maps.event.trigger(vm.map, 'resize');
-
+                console.log("END OF SEARCH");
             }
 
+            //function _googleMapResizeBugFix(lat, long) {
+                
+            //    google.maps.event.addListenerOnce(vm.map, 'idle', function () {
+            //        _search(lat, long);
+            //        google.maps.event.trigger(vm.map, 'resize');
+            //    });
+            //    console.log("RESIZING FINISHED");
+            //}
 
         }
     });
