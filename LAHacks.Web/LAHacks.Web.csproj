@@ -509,7 +509,6 @@
     <Content Include="Scripts\Tour\js\scroll.js" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Registration.cshtml" />
     <Content Include="Views\LAHacks\alpha.cshtml" />
     <Content Include="Views\LAHacks\Delta.cshtml" />
     <Content Include="Views\LAHacks\Epsilon.cshtml" />

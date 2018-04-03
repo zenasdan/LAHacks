@@ -19,10 +19,6 @@
                         <div id="colorlib-logo"><a href="#">History Geek</a></div>
                     </div>
                     <location-search lat="nv.lat" long="nv.long"></location-search>
-                    @*<input type="search" ng-model="obj.searchString"
-                        ng-change="search()" placeholder="Search" class="search-input searchBar">*@
-                    <pre>{{nv.lat | json}}</pre>
-                    <pre>{{nv.long | json}}</pre>
 
                     <div class="col-xs-4 col-sm-4 col-md-5 col-lg-5 text-right menu-1">
                         <ul>
@@ -33,7 +29,6 @@
                             <li ng-model="nv.signInLink" ng-hide="nv.loggedIn"><a href="#" ng-click="nv.signIn()">Sign In</a></li>
                             <li ng-model="nv.signOutLink" ng-show="nv.loggedIn"><a href="#" ng-click="nv.signOut()">Sign Out</a></li>
                             @*<li style="font-weight: bold;"><a href="#">{{nv.userEmail}}</a></li>*@
-
                         </ul>
                     </div>
                 </div>
