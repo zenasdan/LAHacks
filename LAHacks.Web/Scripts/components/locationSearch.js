@@ -2,12 +2,17 @@
     'use strict';
 
     angular.module(appName).component("locationSearch", {
-        bindings: {},
+        bindings: {
+            lat: "=",
+            long: "="
+        },
         templateUrl: "/scripts/components/views/locationSearch.html",
         controller: function ($scope, requestService) {
             var vm = this;
             vm.$onInit = _init;
             vm.search = _search;
+            vm.lat = {};
+            vm.long = {};
 
             function _init() {
             }
@@ -18,6 +23,11 @@
                 requestService.ApiRequestService("POST", "/api/places", model)
                     .then(function (response) {
                         console.log("SUCCESS SEARCH ", response);
+                        var results = response.results;
+                        if (results.length > 0) {
+                            vm.lat = results[0].geometry.location.lat;
+                            vm.long = results[0].geometry.location.lng;
+                        }
                     })
                     .catch(function (err) {
                         console.log("FAILED SEARCH ", err);
