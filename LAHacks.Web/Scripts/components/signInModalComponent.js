@@ -3,7 +3,6 @@
 
     angular.module(appName).component("signInModalComponent", {
         bindings: {
-            resolve: '<',
             close: '&',
             dismiss: '&'
         },
@@ -15,18 +14,9 @@
             vm.signUp = _signUp;
             vm.signIn = _signIn;
             vm.createAccount = _createAccount;
-            vm.signUpModel = {};
-            vm.signInState = true;
 
             function _init() {
-                vm.signUpModel = {};
-
-                if (vm.resolve.signInState === true) {
-                    vm.signInState = vm.resolve.signInState;
-                } else {
-                    vm.signInState = false;
-                }
-                console.log("sign in modal firing");
+                vm.signInState = true;
             }
 
             function _closeMod() {
@@ -34,8 +24,7 @@
             }
 
             function _createAccount() {
-                vm.resolve.signInState = false;
-                _init();
+                vm.signInState = false;
             }
 
             function _signUp(model, form) {
