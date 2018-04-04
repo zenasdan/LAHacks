@@ -1,24 +1,32 @@
 ﻿(function () {
     'use strict';
 
-    angular.module(appName).component("registrationOrSignInModalComponent", {
+    angular.module(appName).component("signInModalComponent", {
         bindings: {
             resolve: '<',
             close: '&',
             dismiss: '&'
         },
-        templateUrl: "/scripts/components/views/registrationOrSignInModal.html",
-        controller: function ($scope, $timeout) {
+        templateUrl: "/scripts/components/views/signInModal.html",
+        controller: function ($scope, $timeout, $uibModal) {
             var vm = this;
             vm.$onInit = _init;
             vm.closeMod = _closeMod;
             vm.signUp = _signUp;
             vm.signIn = _signIn;
-            vm.state = 'signin';
             vm.createAccount = _createAccount;
+            vm.signUpModel = {};
+            vm.signInState = true;
 
             function _init() {
-                console.log("registration or sign in modal firing");
+                vm.signUpModel = {};
+
+                if (vm.resolve.signInState === true) {
+                    vm.signInState = vm.resolve.signInState;
+                } else {
+                    vm.signInState = false;
+                }
+                console.log("sign in modal firing");
             }
 
             function _closeMod() {
@@ -26,25 +34,25 @@
             }
 
             function _createAccount() {
-                vm.state = 'signup';
+                vm.resolve.signInState = false;
+                _init();
             }
 
             function _signUp(model, form) {
-                firebase.auth().createUserWithEmailAndPassword(model.email, model.password)
+                firebase.auth().createuserwithemailandpassword(model.email, model.password)
                     .then(function (success) {
-                        _clearFields(form);
-                        _onAuthStateChanged();
+                        _clearfields(form);
                     })
                     .catch(function (error) {
-                        // Handle Errors here.
-                        var errorCode = error.code;
-                        var errorMessage = error.message;
-                        $scope.showError = true;
-                        if (errorCode == 'auth/weak-password') {
-                            vm.error = 'The password is too weak.';
+                        // handle errors here.
+                        var errorcode = error.code;
+                        var errormessage = error.message;
+                        $scope.showerror = true;
+                        if (errorcode == 'auth/weak-password') {
+                            vm.error = 'the password is too weak.';
                         } else {
-                            console.log("errorMessage", errorMessage);
-                            vm.error = errorMessage;
+                            console.log("errormessage", errormessage);
+                            vm.error = errormessage;
                         }
                     });
             }

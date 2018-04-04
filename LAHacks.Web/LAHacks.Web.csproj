@@ -466,10 +466,10 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\components\historyPointsMap.js" />
     <Content Include="Scripts\components\locationSearch.js" />
-    <Content Include="Scripts\components\registrationOrSignInModalComponent.js" />
+    <Content Include="Scripts\components\signInModalComponent.js" />
     <Content Include="Scripts\components\views\historyPointsMap.html" />
     <Content Include="Scripts\components\views\locationSearch.html" />
-    <Content Include="Scripts\components\views\registrationOrSignInModal.html" />
+    <Content Include="Scripts\components\views\signInModal.html" />
     <Content Include="Scripts\directives\mapGenerator.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
