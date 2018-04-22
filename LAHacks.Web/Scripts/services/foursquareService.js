@@ -6,10 +6,10 @@
 
     function FoursquareService($http) {
        
-        this.getVenuesByHistoricCategory = () => {
+        this.getVenuesByHistoricCategory = (latlong) => {
             const client_id = "AYKRCHFZCCWTDDT2JKTDB0FR5YZQPCSXNMPNCO3LNCP5KDLI";
             const client_secret = "ZPV0A1ZTPEAZP4OBFQCOS0WGM1ZCHZ0BZGU2X4UE1MBV3TSF";
-            const base_url = "https://api.foursquare.com/v2/venues/explore/?near=";
+            const base_url = "https://api.foursquare.com/v2/venues/explore/?ll=";
             let categories = [];
             categories.push("4deefb944765f83613cdba6e"); // "Historic Site"
             categories.push("4bf58dd8d48988d190941735"); // "History Museum"
@@ -18,7 +18,7 @@
 
             return $http({
                 method: "GET",
-                url: base_url + "UCLA" +
+                url: base_url + latlong +
                     "&venuePhotos=1&categoryId=" +
                     categories.join('&') +
                     "&client_id=" + client_id +
