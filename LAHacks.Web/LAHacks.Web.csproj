@@ -269,6 +269,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\Custom\header-section.css" />
     <Content Include="Content\Custom\signInModal.css" />
+    <Content Include="Content\Images\NoImageFound.jpg" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Tour\about.html" />
     <Content Include="Content\Tour\blog.html" />
