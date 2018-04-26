@@ -3,35 +3,33 @@
     angular.module(appName).component("historyPointsMap", {
         bindings: {
             lat: "<",
-            long: "<"
+            long: "<",
+            places: "="
         },
         templateUrl: "/Scripts/components/views/historyPointsMap.html",
-        controller: function (geocodeService, $scope, foursquareService, $compile) {
+        controller: function (geocodeService, $scope, foursquareService) {
             var vm = this;
             vm.$onInit = _init;
             vm.mapOptions = {
                 center: null,
                 zoom: 13
             };
+            vm.places = [];
             var infoWindow;
             vm.$onChanges = function (changes) {
-                console.log("CHANGES", changes);
                 var lat = changes.lat;
                 var long = changes.long;
                 if (!(lat.currentValue) && !(long.currentValue)) {
                     _init();
                     lat.currentValue = vm.lat;
                     long.currentValue = vm.long;
-                    console.log("LAT CURRENT VAL: ", lat.currentValue);
                 }
                 if ((lat.previousValue != lat.currentValue) || (long.previousValue != long.currentValue)) {
-                    console.log("LAT OBJ: " + JSON.stringify(lat) + "; LONG OBJ: " + JSON.stringify(long));
                     _search(lat.currentValue, long.currentValue);
                 }
             }
 
             function _init() {
-                console.log("LAT AND LONG IN INIT: " + JSON.stringify(vm.lat) + ", " + JSON.stringify(vm.long));
                 initMap();
             }
 
@@ -58,7 +56,6 @@
             }
 
             function _search(lat, long) {
-                console.log("LAT AND LONG IN SEARCH FUNC: " + JSON.stringify(lat) + ", " + JSON.stringify(long));
                 if (lat !== undefined && long !== undefined) {
                     vm.mapOptions.center = new google.maps.LatLng(lat, long);
                     var myCurrentPlaceIcon = {
@@ -76,13 +73,14 @@
                         icon: myCurrentPlaceIcon,
                         title: "I'm Here"
                     });
+                    var infowindow;
 
                     var latlong = lat + "," + long;
                     foursquareService.getVenuesByHistoricCategory(latlong)
                         .then(function () {
-                            const venues = JSON.parse(localStorage.getItem("venues"));
-
-                            for (const obj of venues) {
+                            vm.places = JSON.parse(localStorage.getItem("venues"));
+                            let markerArray = [];
+                            for (const obj of vm.places) {
                                 if (obj.venue.photos.groups[0]) {
                                     let contentString = `<div id='content'>
                                     <h4 class="text-center">${obj.venue.name}</h4>
@@ -95,24 +93,40 @@
                                     contentString += `</div><a href="https://en.wikipedia.org/wiki/${encodeURIComponent(obj.venue.name)}" target="_blank"> 
                                     https://en.wikipedia.org/wiki/${obj.venue.name}</a></div > `;
 
-                                    let infowindow = new google.maps.InfoWindow({
-                                        content: contentString
+                                    let marker = new google.maps.Marker({
+                                        map: vm.map,
+                                        position: new google.maps.LatLng(obj.venue.location.lat, obj.venue.location.lng),
+                                        icon: venueIcon,
+                                        title: obj.venue.name
                                     });
+
+                                    markerArray.push(marker);
+
+                                    marker.addListener('click', function () {
+                                        if (infowindow) {
+                                            infowindow.close();
+                                        }
+                                        infowindow = new google.maps.InfoWindow({
+                                            content: contentString
+                                        });
+                                        infowindow.open(vm.map, marker);
+                                    });
+
+                                    obj.venue.photos.groups[0].items[0].url = obj.venue.photos.groups[0].items[0].prefix + '300x250' + obj.venue.photos.groups[0].items[0].suffix;
+                                } else {
+                                    var temp = { items: [{ url: '../Content/Images/NoImageFound.jpg' }] };
+                                    obj.venue.photos.groups.push(temp);
                                 }
-
-                                let marker = new google.maps.Marker({
-                                    map: vm.map,
-                                    position: new google.maps.LatLng(obj.venue.location.lat, obj.venue.location.lng),
-                                    icon: venueIcon,
-                                    title: obj.venue.name
-                                });
-
-                                marker.addListener('click', function () {
-                                    infowindow.open(vm.map, marker);
-                                });
+                                
                             }
+                            var bounds = new google.maps.LatLngBounds();
+                            for (var i = 0; i < markerArray.length; i++) {
+                                bounds.extend(markerArray[i].getPosition());
+                            }
+
+                            vm.map.fitBounds(bounds);
+
                             google.maps.event.trigger(vm.map, 'resize');
-                            console.log("END OF SEARCH");
                         });
                 }
             }

@@ -25,7 +25,6 @@
                     "&client_secret=" + client_secret +
                     "&v=" + (new Date()).toISOString().slice(0, 10).replace(/-/g, "")
             }).then((resp, status) => {
-                console.log("RESP.DATA.RESPONSE.GROUPS[0].ITEMS: ", resp.data.response.groups[0].items);
                 localStorage.setItem("venues", JSON.stringify(resp.data.response.groups[0].items));
             }, (data, status) => {
                 swal({
@@ -33,14 +32,12 @@
                     text: "Please try with another location",
                     icon: "error"
                 }); 
-               
             }).catch(err => {
                 swal({
                     title: "Something went wrong",
                     text: err.message,
                     icon: "error"
                 });
-                
             });
         }
 
@@ -68,7 +65,6 @@
                     text: err.message,
                     icon: "error"
                 });
-
             });
         }
     }
