@@ -9,24 +9,21 @@
         templateUrl: "/scripts/components/views/locationSearch.html",
         controller: function ($scope, requestService) {
             var vm = this;
-            vm.$onInit = _init;
             vm.search = _search;
             vm.lat = {};
             vm.long = {};
-
-            function _init() {
-            }
 
             function _search(searchText) {
                 var result = _concatify(searchText);
                 var model = {"queryString": result};
                 requestService.ApiRequestService("POST", "/api/places", model)
                     .then(function (response) {
-                        console.log("SUCCESS SEARCH ", response);
                         var results = response.results;
                         if (results.length > 0) {
                             vm.lat = results[0].geometry.location.lat;
                             vm.long = results[0].geometry.location.lng;
+                        } else {
+                            swal("Oops!", "We couldn't find any results based on your search criteria. Please try again.", "error");
                         }
                     })
                     .catch(function (err) {
